@@ -86,6 +86,11 @@
               and see if they are equal to each other.
             - if they are, we'll progress p by one, and we'll move q by one in reverse until we get a point where p and q meet
               or can't move any further without crossing
+
+    13) Move Tail to Head
+        - use two pointers where one will keep track of the last node of the linkedlist,
+          and the other will point to the second-to-last node of the linked list.
+
 '''
 
 
@@ -416,16 +421,41 @@ class LinkedList:
         elif method == 3:
             return self.is_palindrome_3()
 
+    def move_tail_to_head(self):
+        if self.head and self.head.next:
+            last = self.head
+            second_to_last = None
+            while last.next:
+                second_to_last = last
+                last = last.next
+            # make circular linked list where the last node points to the first element of the linked list
+            last.next = self.head
+            second_to_last.next = None  # make linear linked list
+            self.head = last
 
+
+# A -> B -> C -> D -> Null
+# D -> A -> B -> C -> Null
 llist = LinkedList()
-llist.append("R")
 llist.append("A")
+llist.append("B")
 llist.append("C")
-llist.append("E")
-llist.append("C")
-llist.append("A")
-llist.append("R")
-print(llist.is_palindrome(3))
+llist.append("D")
+
+llist.print_list()
+llist.move_tail_to_head()
+print("\n")
+llist.print_list()
+
+# llist = LinkedList()
+# llist.append("R")
+# llist.append("A")
+# llist.append("C")
+# llist.append("E")
+# llist.append("C")
+# llist.append("A")
+# llist.append("R")
+# print(llist.is_palindrome(3))
 
 # llist = LinkedList()
 # llist.append(1)

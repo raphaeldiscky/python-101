@@ -61,6 +61,10 @@
             - q will point n nodes beyond head node
             - next,  we’ll move these pointers along with the linked list one node at a time. 
               When q will reach None, we’ll check where p is pointing, as that is the nod
+    
+    10) Count Occurences
+        a. Iterative Implementation
+        b. Recursive Implementation
 '''
 
 
@@ -294,12 +298,34 @@ class LinkedList:
             else:
                 return None
 
+    def count_occurences_iterative(self, data):
+        count = 0
+        cur = self.head
+        while cur:
+            if cur.data == data:
+                count += 1
+            cur = cur.next
+        return count
 
-llist = LinkedList()
-llist.append("A")
-llist.append("B")
-llist.append("C")
-llist.append("D")
+    def count_occurences_recursive(self, node, data):
+        if not node:
+            return 0
+        if node.data == data:
+            return 1 + self.count_occurences_recursive(node.next, data)
+        else:
+            return self.count_occurences_recursive(node.next, data)
+
+
+llist_2 = LinkedList()
+llist_2.append(1)
+llist_2.append(2)
+llist_2.append(1)
+llist_2.append(3)
+llist_2.append(1)
+llist_2.append(4)
+llist_2.append(1)
+print(llist_2.count_occurences_iterative(1))
+print(llist_2.count_occurences_recursive(llist_2.head, 1))
 
 # llist.insert_after_node(llist.head.next, "Z")
 # llist.insert_after_node(llist.head, "ZZ")
@@ -355,6 +381,3 @@ llist.append("D")
 # print("Linked List After Removing Duplicates")
 # llist.remove_duplicates()
 # llist.print_list()
-
-print(llist.print_nth_from_last(4, 1))
-print(llist.print_nth_from_last(4, 2))

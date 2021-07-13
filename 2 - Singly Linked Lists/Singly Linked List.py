@@ -65,6 +65,17 @@
     10) Count Occurences
         a. Iterative Implementation
         b. Recursive Implementation
+    
+    11) Rotate
+        shifting or rotating that follows the pivot node to the front of the linked list
+        a. Algorithm
+            - use two pointer p and q
+            - p points to the pivot node while q points to the end of the linked list.
+              Then, instead of making it point to None, we make it point to the head of linked list. 
+              After this step, we achieve a circular linked list.
+            - update the head of linked list, which will be the next element after the pivot node, 
+              as the pivot node has to be the last node.
+            - set p.next to None which breaks up the circular linked list and make p the last element
 '''
 
 
@@ -315,17 +326,50 @@ class LinkedList:
         else:
             return self.count_occurences_recursive(node.next, data)
 
+    def rotate(self, k):
+        if self.head and self.head.next:
+            p = self.head
+            q = self.head
+            prev = None
+            count = 0
 
-llist_2 = LinkedList()
-llist_2.append(1)
-llist_2.append(2)
-llist_2.append(1)
-llist_2.append(3)
-llist_2.append(1)
-llist_2.append(4)
-llist_2.append(1)
-print(llist_2.count_occurences_iterative(1))
-print(llist_2.count_occurences_recursive(llist_2.head, 1))
+            while p and count < k:
+                prev = p
+                p = p.next
+                q = q.next
+                count += 1
+            p = prev
+            while q:
+                prev = q
+                q = q.next
+            q = prev  # q points to last element in linked list
+
+            q.next = self.head
+            self.head = p.next
+            p.next = None
+
+
+llist = LinkedList()
+llist.append(1)
+llist.append(2)
+llist.append(3)
+llist.append(4)
+llist.append(5)
+llist.append(6)
+
+llist.rotate(4)
+llist.print_list()
+
+# llist_2 = LinkedList()
+# llist_2.append(1)
+# llist_2.append(2)
+# llist_2.append(1)
+# llist_2.append(3)
+# llist_2.append(1)
+# llist_2.append(4)
+# llist_2.append(1)
+# print(llist_2.count_occurences_iterative(1))
+# print(llist_2.count_occurences_recursive(llist_2.head, 1))
 
 # llist.insert_after_node(llist.head.next, "Z")
 # llist.insert_after_node(llist.head, "ZZ")

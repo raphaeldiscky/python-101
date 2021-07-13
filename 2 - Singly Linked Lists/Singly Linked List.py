@@ -257,42 +257,49 @@ class LinkedList:
                 prev = cur
             cur = prev.next  # to traverse the linked list
 
-    def print_nth_from_last1(self, n):
-        total_len = self.len_iterative()
-
-        cur = self.head
-        while cur:
-            if total_len == n:
-                print(cur.data)
-                return cur.data
-            total_len -= 1
-            cur = cur.next
-        if cur is None:
-            return
-
-    def print_nth_from_last2(self, n):
-        p = self.head
-        q = self.head
-
-        if n > 0:
-            count = 0
-            while q:
-                count += 1
-                if(count >= n):
-                    break
-                q = q.next
-
-            if not q:
-                print(str(n) + " is greater than the number of nodes in lists.")
+    def print_nth_from_last(self, n, method):
+        if method == 1:
+            # method 1
+            total_len = self.len_iterative()
+            cur = self.head
+            while cur:
+                if total_len == n:
+                    return cur.data
+                total_len -= 1
+                cur = cur.next
+            if cur is None:
                 return
 
-            while p and q.next:
-                p = p.next
-                q = q.next
-            return p.data
-        else:
-            return None
+        elif method == 2:
+            # method 2
+            p = self.head
+            q = self.head
 
+            if n > 0:
+                count = 0
+                while q:
+                    count += 1
+                    if(count >= n):
+                        break
+                    q = q.next
+
+                if not q:
+                    print(str(n) + " is greater than the number of nodes in lists.")
+                    return
+
+                while p and q.next:
+                    p = p.next
+                    q = q.next
+                return p.data
+            else:
+                return None
+
+
+llist = LinkedList()
+llist.append("A")
+llist.append("B")
+llist.append("C")
+llist.append("D")
 
 # llist.insert_after_node(llist.head.next, "Z")
 # llist.insert_after_node(llist.head, "ZZ")
@@ -348,3 +355,6 @@ class LinkedList:
 # print("Linked List After Removing Duplicates")
 # llist.remove_duplicates()
 # llist.print_list()
+
+print(llist.print_nth_from_last(4, 1))
+print(llist.print_nth_from_last(4, 2))

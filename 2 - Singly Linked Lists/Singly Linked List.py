@@ -76,6 +76,16 @@
             - update the head of linked list, which will be the next element after the pivot node, 
               as the pivot node has to be the last node.
             - set p.next to None which breaks up the circular linked list and make p the last element
+
+    12) Is Palindrome
+        a. Using a string
+        b. Using a stack 
+        c. Using two pointers
+            - pointer p will initially point to the head of the list and pointer q to the last node of the list.
+            - we'll check the data elements at each of these nodes that are being pointed to by p and q,
+              and see if they are equal to each other.
+            - if they are, we'll progress p by one, and we'll move q by one in reverse until we get a point where p and q meet
+              or can't move any further without crossing
 '''
 
 
@@ -348,17 +358,84 @@ class LinkedList:
             self.head = p.next
             p.next = None
 
+    def is_palindrome_1(self):
+        # using a string
+        s = ""
+        p = self.head
+        while p:
+            s += p.data
+            p = p.next
+        return s == s[::-1]  # reverse a string
+
+    def is_palindrome_2(self):
+        # using a stack
+        p = self.head
+        s = []
+        while p:
+            s.append(p.data)
+            p = p.next
+        p = self.head
+        while p:
+            data = s.pop()
+            if p.data != data:
+                return False
+            p = p.next
+        return True
+
+    def is_palindrome_3(self):
+        # using two pointers
+        if self.head:
+            p = self.head
+            q = self.head
+            prev = []
+
+            i = 0
+            while q:  # move q to end of linked list
+                prev.append(q)
+                q = q.next
+                i += 1
+            q = prev[i-1]
+
+            count = 1
+
+            while count <= i//2 + 1:
+                # comparing last element in the prev list, with first element in p
+                if prev[-count].data != p.data:
+                    return False
+                p = p.next
+                count += 1
+            return True
+        else:
+            return True
+
+    def is_palindrome(self, method):
+        if method == 1:
+            return self.is_palindrome_1()
+        elif method == 2:
+            return self.is_palindrome_2()
+        elif method == 3:
+            return self.is_palindrome_3()
+
 
 llist = LinkedList()
-llist.append(1)
-llist.append(2)
-llist.append(3)
-llist.append(4)
-llist.append(5)
-llist.append(6)
+llist.append("R")
+llist.append("A")
+llist.append("C")
+llist.append("E")
+llist.append("C")
+llist.append("A")
+llist.append("R")
+print(llist.is_palindrome(3))
 
-llist.rotate(4)
-llist.print_list()
+# llist = LinkedList()
+# llist.append(1)
+# llist.append(2)
+# llist.append(3)
+# llist.append(4)
+# llist.append(5)
+# llist.append(6)
+# llist.rotate(4)
+# llist.print_list()
 
 # llist_2 = LinkedList()
 # llist_2.append(1)

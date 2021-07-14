@@ -2,6 +2,11 @@
     1) Insertion
         a. append
         b. prepend
+    2) Remove Node for No Duplicate Nodes
+        a. assumption: 
+            - the occurrences of nodes will be unique, 
+              i.e., there will be no duplicate nodes in the circular linked list that we’ll test on.
+    
 '''
 
 
@@ -40,6 +45,27 @@ class CircularLinkedList:
             cur.next = new_node
             new_node.next = self.head
 
+    def remove(self, key):
+        if self.head:
+            if self.head.data == key:
+                cur = self.head
+                while cur.next != self.head:
+                    cur = cur.next
+                if self.head == self.head.next:
+                    self.head = None
+                else:
+                    cur.next = self.head.next
+                    self.head = self.head.next
+            else:
+                cur = self.head
+                prev = None
+                while cur.next != self.head:
+                    prev = cur
+                    cur = cur.next
+                    if cur.data == key:
+                        prev.next = cur.next
+                        cur = cur.next
+
     def print_list(self):
         cur = self.head
         while cur:
@@ -50,8 +76,11 @@ class CircularLinkedList:
 
 
 cllist = CircularLinkedList()
+cllist.append("A")
+cllist.append("B")
 cllist.append("C")
 cllist.append("D")
-cllist.prepend("B")
-cllist.prepend("A")
+
+cllist.remove("A")
+cllist.remove("C")
 cllist.print_list()

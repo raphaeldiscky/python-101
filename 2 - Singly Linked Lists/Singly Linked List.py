@@ -16,7 +16,7 @@
     3) Deletion by Index
         a. Node to be deleted is at index 0
         b. Node to be deleted is not at index 0
-    
+
     4) Calculate the Length
         a. Iterative implementation
         b. Recursive Implementation
@@ -24,31 +24,31 @@
     5) Swap Two Nodes
         a. Node 1 and Node 2 are not head nodes
         b. Either Node 1 or Node 2 is a head nodes
-    
+
     6) Reverse a Linked List
         a. Iterative implementation
         b. Recursive Implementation
-    
+
     7) Merge Two Sorted Linked Lists
         a. Assumption:
             - Each of the sorted linked lists will contain at least one element.
             - Create a third linked list which is also sorted.
-            - The two linked lists given will no longer be available in their original form, 
+            - The two linked lists given will no longer be available in their original form,
               and only one linked list which includes both their nodes will remain.
         b. Algorithm:
             - two pointer (p and q) which will each initially point to the head node of each linked list.
-            - pointer s will point to the smaller value of data of the nodes that p and q are pointing to.
-            - Once s points to the smaller value of the data of nodes that p and q point to, 
+            - pointer sum will point to the smaller value of data of the nodes that p and q are pointing to.
+            - Once sum points to the smaller value of the data of nodes that p and q point to,
               p or q will move on to the next node in their respective linked list.
-            - If s and p point to the same node, p moves forward; otherwise q moves forward.
-            - The final merged linked list will be made from the nodes that s keeps pointing to.
-    
+            - If sum and p point to the same node, p moves forward; otherwise q moves forward.
+            - The final merged linked list will be made from the nodes that sum keeps pointing to.
+
     8) Remove Duplicates
         a. Algorithm:
             - loop through the linked list once and keep track of all the data held at each of the nodes.
             - use hash table or dictionary to keep track of the data elements that we encounter.
               ex, if we encounter 6, we will add that to the dictionary or hash table and move along.
-              Now if we meet another 6 and we check for it in our dictionary or hash table, 
+              Now if we meet another 6 and we check for it in our dictionary or hash table,
               then we’ll know that we already have a 6 and the current node is a duplicate.
 
     9) Nth-to-Last Noe
@@ -59,27 +59,27 @@
             - use two pointers p and q
             - p will point to the head node
             - q will point n nodes beyond head node
-            - next,  we’ll move these pointers along with the linked list one node at a time. 
+            - next,  we’ll move these pointers along with the linked list one node at a time.
               When q will reach None, we’ll check where p is pointing, as that is the nod
-    
+
     10) Count Occurences
         a. Iterative Implementation
         b. Recursive Implementation
-    
+
     11) Rotate
         shifting or rotating that follows the pivot node to the front of the linked list
         a. Algorithm
             - use two pointer p and q
             - p points to the pivot node while q points to the end of the linked list.
-              Then, instead of making it point to None, we make it point to the head of linked list. 
+              Then, instead of making it point to None, we make it point to the head of linked list.
               After this step, we achieve a circular linked list.
-            - update the head of linked list, which will be the next element after the pivot node, 
+            - update the head of linked list, which will be the next element after the pivot node,
               as the pivot node has to be the last node.
             - set p.next to None which breaks up the circular linked list and make p the last element
 
     12) Is Palindrome
         a. Using a string
-        b. Using a stack 
+        b. Using a stack
         c. Using two pointers
             - pointer p will initially point to the head of the list and pointer q to the last node of the list.
             - we'll check the data elements at each of these nodes that are being pointed to by p and q,
@@ -90,6 +90,9 @@
     13) Move Tail to Head
         - use two pointers where one will keep track of the last node of the linkedlist,
           and the other will point to the second-to-last node of the linked list.
+
+    14) Sum Two Linked Lists
+        llist1: 3->6->5, llist2: 2->4->8, sum: 613
 
 '''
 
@@ -239,7 +242,7 @@ class LinkedList:
     def merge_sorted(self, llist):
         p = self.head
         q = llist.head
-        s = None
+        sum = None
 
         if not p:
             return q
@@ -248,25 +251,25 @@ class LinkedList:
 
         if p and q:
             if p.data <= q.data:
-                s = p
-                p = s.next
+                sum = p
+                p = sum.next
             else:
-                s = q
-                q = s.next
-            new_head = s
+                sum = q
+                q = sum.next
+            new_head = sum
         while p and q:
             if p.data <= q.data:
-                s.next = p
-                s = p
-                p = s.next
+                sum.next = p
+                sum = p
+                p = sum.next
             else:
-                s.next = q
-                s = q
-                q = s.next
+                sum.next = q
+                sum = q
+                q = sum.next
         if not p:
-            s.next = q
+            sum.next = q
         if not q:
-            s.next = p
+            sum.next = p
 
         self.head = new_head
         return self.head
@@ -365,23 +368,23 @@ class LinkedList:
 
     def is_palindrome_1(self):
         # using a string
-        s = ""
+        sum = ""
         p = self.head
         while p:
-            s += p.data
+            sum += p.data
             p = p.next
-        return s == s[::-1]  # reverse a string
+        return sum == sum[::-1]  # reverse a string
 
     def is_palindrome_2(self):
         # using a stack
         p = self.head
-        s = []
+        sum = []
         while p:
-            s.append(p.data)
+            sum.append(p.data)
             p = p.next
         p = self.head
         while p:
-            data = s.pop()
+            data = sum.pop()
             if p.data != data:
                 return False
             p = p.next
@@ -433,19 +436,62 @@ class LinkedList:
             second_to_last.next = None  # make linear linked list
             self.head = last
 
+    def sum_two_lists(self, llist):
+        p = self.head
+        q = llist.head
 
-# A -> B -> C -> D -> Null
-# D -> A -> B -> C -> Null
-llist = LinkedList()
-llist.append("A")
-llist.append("B")
-llist.append("C")
-llist.append("D")
+        sum_llist = LinkedList()  # data values of sum_llist will represent the final sum
 
-llist.print_list()
-llist.move_tail_to_head()
-print("\n")
-llist.print_list()
+        carry = 0
+        while p or q:
+            if not p:
+                i = 0
+            else:
+                i = p.data  # i = current digit picked from the first linked list
+            if not q:
+                j = 0
+            else:
+                j = q.data  # j = current digit picked from the second linked list
+            sum = i + j + carry
+            if sum >= 10:
+                print("sum >= 10", sum)
+                carry = 1
+                remainder = sum % 10
+                sum_llist.append(remainder)
+            else:
+
+                carry = 0
+                sum_llist.append(sum)
+            if p:
+                p = p.next
+            if q:
+                q = q.next
+        return sum_llist
+
+
+llist1 = LinkedList()
+llist1.append(5)
+llist1.append(6)
+llist1.append(3)
+
+llist2 = LinkedList()
+llist2.append(8)
+llist2.append(4)
+llist2.append(2)
+
+print(365 + 248)
+llist1.sum_two_lists(llist2)
+
+# llist = LinkedList()
+# llist.append("A")
+# llist.append("B")
+# llist.append("C")
+# llist.append("D")
+
+# llist.print_list()
+# llist.move_tail_to_head()
+# print("\n")
+# llist.print_list()
 
 # llist = LinkedList()
 # llist.append("R")

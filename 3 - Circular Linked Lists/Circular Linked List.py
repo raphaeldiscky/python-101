@@ -2,10 +2,13 @@
     1) Insertion
         a. append
         b. prepend
+    
     2) Remove Node for No Duplicate Nodes
         a. assumption: 
             - the occurrences of nodes will be unique, 
               i.e., there will be no duplicate nodes in the circular linked list that we’ll test on.
+    
+    3) Split Linked List into Halves
     
 '''
 
@@ -19,6 +22,14 @@ class Node:
 class CircularLinkedList:
     def __init__(self):
         self.head = None
+
+    def print_list(self):
+        cur = self.head
+        while cur:
+            print(cur.data)
+            cur = cur.next
+            if cur == self.head:
+                break
 
     def prepend(self, data):
         new_node = Node(data)
@@ -66,13 +77,47 @@ class CircularLinkedList:
                         prev.next = cur.next
                         cur = cur.next
 
-    def print_list(self):
+    def __len__(self):
         cur = self.head
+        count = 0
         while cur:
-            print(cur.data)
+            count += 1
             cur = cur.next
             if cur == self.head:
                 break
+        return count
+
+    def split_list(self):
+        size = len(self)
+
+        if size == 0:
+            return None
+        if size == 1:
+            return self.head
+
+        mid = size//2
+        count = 0
+
+        prev = None
+        cur = self.head
+
+        # first linked list
+        while cur and count < mid:
+            count += 1
+            prev = cur
+            cur = cur.next
+        prev.next = self.head
+
+        # second linked list
+        split_cllist = CircularLinkedList()
+        while cur.next != self.head:
+            split_cllist.append(cur.data)
+            cur = cur.next
+        split_cllist.append(cur.data)
+
+        self.print_list()
+        print("\n")
+        split_cllist.print_list()
 
 
 cllist = CircularLinkedList()
@@ -80,7 +125,8 @@ cllist.append("A")
 cllist.append("B")
 cllist.append("C")
 cllist.append("D")
+cllist.append("E")
+cllist.append("F")
 
-cllist.remove("A")
-cllist.remove("C")
-cllist.print_list()
+
+cllist.split_list()

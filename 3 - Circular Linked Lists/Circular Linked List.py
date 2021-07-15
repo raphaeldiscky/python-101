@@ -15,6 +15,8 @@
             - the counting out begins at a specified point in a circle and continues around the circle in a fixed direction.
             - in each step, a certain number of people are skipped and the next person is executed.
     
+    5) Is Circular Linked List
+    
 '''
 
 

@@ -26,6 +26,9 @@
         - to reverse a doubly linked list, we need to switch the next and previous pointers of every node
     
     5) Remove Duplicates
+
+    6) Pairs with Sums
+        find pairs from a doubly linked list which sum to a specified number.
 '''
 
 
@@ -202,19 +205,25 @@ class DoublyLinkedList:
                 self.delete_node(cur)
                 cur = nxt
 
+    def pairs_with_sum(self, sum_val):
+        pairs = []
+        p = self.head
+        q = None
+        while p:
+            q = p.next
+            while q:
+                if (p.data + q.data) == sum_val:
+                    pairs.append("(" + str(p.data) + ',' + str(q.data) + ")")
+                q = q.next
+            p = p.next
+        return pairs
+
 
 dllist = DoublyLinkedList()
-dllist.append(8)
+dllist.append(1)
+dllist.append(2)
+dllist.append(3)
 dllist.append(4)
-dllist.append(4)
-dllist.append(6)
-dllist.append(4)
-dllist.append(8)
-dllist.append(4)
-dllist.append(10)
-dllist.append(12)
-dllist.append(12)
+dllist.append(5)
 
-
-dllist.remove_duplicates()
-dllist.print_list()
+print(dllist.pairs_with_sum(5))

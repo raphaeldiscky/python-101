@@ -15,6 +15,12 @@
         b. Add Node Before, two cases:
             - insert a new before the head node
             - insert a new node before a node that is not a head node
+    
+    3) Delete Node
+        a. Case 1: deleting the only node present
+        b. Case 2: deleting head node from more than one node
+        c. Case 3: deleting node other than head where cur.next is not None
+        d. Case 4: deleting node other than head where cur.next is None
 '''
 
 
@@ -90,17 +96,54 @@ class DoublyLinkedList:
                 return
             cur = cur.next
 
+    def delete(self, key):
+        cur = self.head
+        while cur:
+            if cur.data == key and cur == self.head:
+                # Case 1: deleting the only node present
+                if not cur.next:
+                    cur = None
+                    self.head = None
+                    return
+                # Case 2: deleting head node from more than one node
+                else:
+                    nxt = cur.next
+                    cur.next = None
+                    nxt.prev = None
+                    cur = None
+                    self.head = nxt
+                    return
+
+            elif cur.data == key:
+                # Case 3: deleting node other than head where cur.next is not None
+                if cur.next:
+                    nxt = cur.next
+                    prev = cur.prev
+                    prev.next = nxt
+                    nxt.prev = prev
+                    cur.next = None
+                    cur.prev = None
+                    cur = None
+                    return
+                # Case 4: deleting node other than head where cur.next is None
+                else:
+                    prev = cur.prev
+                    prev.next = None
+                    cur.prev = None
+                    cur = None
+                    return
+            cur = cur.next
+
 
 dllist = DoublyLinkedList()
-
-dllist.prepend(0)
 dllist.append(1)
 dllist.append(2)
 dllist.append(3)
 dllist.append(4)
-dllist.prepend(5)
 
-dllist.add_after_node(3, 6)
-dllist.add_before_node(4, 9)
+dllist.delete(1)
+dllist.delete(6)
+dllist.delete(4)
 
+dllist.delete(3)
 dllist.print_list()

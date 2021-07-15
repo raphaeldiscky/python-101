@@ -24,6 +24,8 @@
 
     4) Reverse 
         - to reverse a doubly linked list, we need to switch the next and previous pointers of every node
+    
+    5) Remove Duplicates
 '''
 
 
@@ -137,6 +139,46 @@ class DoublyLinkedList:
                     return
             cur = cur.next
 
+    def delete_node(self, node):
+        cur = self.head
+        while cur:
+            if cur == node and cur == self.head:
+                # Case 1:
+                if not cur.next:
+                    cur = None
+                    self.head = None
+                    return
+
+                # Case 2:
+                else:
+                    nxt = cur.next
+                    cur.next = None
+                    nxt.prev = None
+                    cur = None
+                    self.head = nxt
+                    return
+
+            elif cur == node:
+                # Case 3:
+                if cur.next:
+                    nxt = cur.next
+                    prev = cur.prev
+                    prev.next = nxt
+                    nxt.prev = prev
+                    cur.next = None
+                    cur.prev = None
+                    cur = None
+                    return
+
+                # Case 4:
+                else:
+                    prev = cur.prev
+                    prev.next = None
+                    cur.prev = None
+                    cur = None
+                    return
+            cur = cur.next
+
     def reverse(self):
         tmp = None
         cur = self.head
@@ -148,11 +190,31 @@ class DoublyLinkedList:
         if tmp:
             self.head = tmp.prev
 
+    def remove_duplicates(self):
+        cur = self.head
+        seen = {}
+        while cur:
+            if cur.data not in seen:
+                seen[cur.data] = 1  # add cur.data to seen dict with value 1
+                cur = cur.next
+            else:
+                nxt = cur.next
+                self.delete_node(cur)
+                cur = nxt
+
 
 dllist = DoublyLinkedList()
-dllist.append(1)
-dllist.append(2)
-dllist.append(3)
+dllist.append(8)
 dllist.append(4)
-dllist.reverse()
+dllist.append(4)
+dllist.append(6)
+dllist.append(4)
+dllist.append(8)
+dllist.append(4)
+dllist.append(10)
+dllist.append(12)
+dllist.append(12)
+
+
+dllist.remove_duplicates()
 dllist.print_list()

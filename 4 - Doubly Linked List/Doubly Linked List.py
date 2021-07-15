@@ -21,6 +21,9 @@
         b. Case 2: deleting head node from more than one node
         c. Case 3: deleting node other than head where cur.next is not None
         d. Case 4: deleting node other than head where cur.next is None
+
+    4) Reverse 
+        - to reverse a doubly linked list, we need to switch the next and previous pointers of every node
 '''
 
 
@@ -134,16 +137,22 @@ class DoublyLinkedList:
                     return
             cur = cur.next
 
+    def reverse(self):
+        tmp = None
+        cur = self.head
+        while cur:
+            tmp = cur.prev
+            cur.prev = cur.next
+            cur.next = tmp
+            cur = cur.prev
+        if tmp:
+            self.head = tmp.prev
+
 
 dllist = DoublyLinkedList()
 dllist.append(1)
 dllist.append(2)
 dllist.append(3)
 dllist.append(4)
-
-dllist.delete(1)
-dllist.delete(6)
-dllist.delete(4)
-
-dllist.delete(3)
+dllist.reverse()
 dllist.print_list()

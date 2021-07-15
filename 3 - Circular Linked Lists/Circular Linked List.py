@@ -157,12 +157,21 @@ class CircularLinkedList:
             cur = cur.next
             length -= 1
 
+    def is_circular_linked_list(self, input_list):
+        if input_list.head:
+            cur = input_list.head
+            while cur.next:
+                cur = cur.next
+                if cur.next == input_list.head:
+                    return True
+            return False
+        else:
+            return False
+
 
 cllist = CircularLinkedList()
 cllist.append(1)
 cllist.append(2)
 cllist.append(3)
-cllist.append(4)
 
-cllist.josephus_circle(2)
-cllist.print_list()
+print(cllist.is_circular_linked_list(cllist))

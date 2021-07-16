@@ -34,6 +34,14 @@
     
     4) Calculating the Height of a Binary Tree
         recursive approach
+    
+    5) Calculating the Size of a Tree
+        size of three = total number of nodes in a tree
+        a. Iterative Approach
+            - push to stack and increment size by 1
+            - pop top of stack and push their children on to the stack, for every push increment size by 1
+            - repeat until stack empty
+        b. Recursive Approach
 
 '''
 
@@ -53,12 +61,15 @@ class BinaryTree(object):
         self.root = Node(root)
 
     def print_tree(self, traversal_type):
+        # recursive traversal
         if traversal_type == "preorder":
             return self.preorder_print(tree.root, "")
         elif traversal_type == "inorder":
             return self.inorder_print(tree.root, "")
         elif traversal_type == "postorder":
             return self.postorder_print(tree.root, "")
+
+        # iterative traversal
         elif traversal_type == "levelorder":
             return self.levelorder_print(tree.root)
         elif traversal_type == "reverse_levelorder":
@@ -142,6 +153,28 @@ class BinaryTree(object):
 
         return 1 + max(left_height, right_height)
 
+    def size_iterative(self):
+        if self.root is None:
+            return 0
+
+        stack = Stack()
+        stack.push(self.root)
+        size = 1
+        while stack:
+            node = stack.pop()
+            if node.left:
+                size += 1
+                stack.push(node.left)
+            if node.right:
+                size += 1
+                stack.push(node.right)
+        return size
+
+    def size_recursive(self, node):
+        if node is None:
+            return 0
+        return 1 + self.size_recursive(node.left) + self.size_recursive(node.right)
+
 
 #     1
 #    / \
@@ -154,4 +187,6 @@ tree.root.left = Node(2)
 tree.root.right = Node(3)
 tree.root.left.left = Node(4)
 tree.root.left.right = Node(5)
-print(tree.height(tree.root))
+
+print(tree.size_iterative())
+print(tree.size_recursive(tree.root))

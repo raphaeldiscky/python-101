@@ -1,5 +1,7 @@
-'''
-    1) Traversal Algorithm
+''' 
+    Binary Tree = tree data structure in which each node has at most two children, 
+    which are referred to as the left child and the right child.
+    1) Traversal Algorithm (DFS), time = O(n)
         a. Pre-order traversal
             - check if the current node is null
             - display the data part of the root (or current node)
@@ -16,7 +18,7 @@
             - traverse the right subtree by recursively calling the pre-order method
             - display the data part of the root (or current node)
 
-    2) Level-Order Traversal
+    2) Level-Order Traversal (BFS), time = O(n)
         require a queue (last element = front, first element = back)
         - enqueue root node
         - dequeue from the queue and add it to traversal

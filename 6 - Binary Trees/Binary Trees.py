@@ -15,17 +15,26 @@
             - traverse the left subtree by recursively calling the pre-order method
             - traverse the right subtree by recursively calling the pre-order method
             - display the data part of the root (or current node)
-    
-    2) Level Order Traversal
+
+    2) Level-Order Traversal
         require a queue (last element = front, first element = back)
         - enqueue root node
         - dequeue from the queue and add it to traversal
         - enqueue the children of the node we dequeue
         - dequeue from the queue and add it to traversal, enqueue its children again
-        - repeat until queue == 0
+        - repeat until queue empty
+
+    3) Reverse Level-Order Traversal
+        using queue with a slight tweak (enqueue the right child, then the left child) and using stack
+        - enqueue root node
+        - dequeue from the queue and push to stack
+        - enqueue the children (right then left)
+        - repeat until queue empty
+        - pop the stack
 '''
 
 from Queue import Queue
+from Stack import Stack
 
 
 class Node(object):
@@ -48,6 +57,8 @@ class BinaryTree(object):
             return self.postorder_print(tree.root, "")
         elif traversal_type == "levelorder":
             return self.levelorder_print(tree.root)
+        elif traversal_type == "reverse_levelorder":
+            return self.reverse_levelorder_print(tree.root)
         else:
             print("Traversal type " + str(traversal_type) + " is not supported.")
             return False
@@ -94,6 +105,31 @@ class BinaryTree(object):
                 queue.enqueue(node.right)
         return traversal
 
+    def reverse_levelorder_print(self, start):
+        if start is None:
+            return
+
+        queue = Queue()
+        stack = Stack()
+        queue.enqueue(start)
+
+        traversal = ""
+        while len(queue) > 0:
+            node = queue.dequeue()
+            stack.push(node)
+
+            if node.right:
+                queue.enqueue(node.right)
+            if node.left:
+                queue.enqueue(node.left)
+
+        while len(stack) > 0:
+            node = stack.pop()
+            traversal += str(node.value) + "-"
+
+        return traversal
+
+
 #               1
 #           /       \
 #          2          3
@@ -107,7 +143,7 @@ tree.root.right = Node(3)
 tree.root.left.left = Node(4)
 tree.root.left.right = Node(5)
 
-print(tree.print_tree("levelorder"))
+print(tree.print_tree("reverse_levelorder"))
 
 # print(tree.print_tree("preorder"))
 # print(tree.print_tree("inorder"))

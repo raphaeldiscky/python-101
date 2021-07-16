@@ -7,7 +7,7 @@
             - display the data part of the root (or current node)
             - traverse the left subtree by recursively calling the pre-order method
             - traverse the right subtree by recursively calling the pre-order method
-        b. In-order Traversal
+        b. In-order Traversal 
             - check if the current node is null
             - traverse the left subtree by recursively calling the pre-order method
             - display the data part of the root (or current node)

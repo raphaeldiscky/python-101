@@ -20,7 +20,7 @@
         require a queue (last element = front, first element = back)
         - enqueue root node
         - dequeue from the queue and add it to traversal
-        - enqueue the children of the node we dequeue
+        - enqueue the children from left child to right child of the node we dequeue
         - dequeue from the queue and add it to traversal, enqueue its children again
         - repeat until queue empty
 
@@ -31,6 +31,10 @@
         - enqueue the children (right then left)
         - repeat until queue empty
         - pop the stack
+    
+    4) Calculating the Height of a Binary Tree
+        recursive approach
+
 '''
 
 from Queue import Queue
@@ -129,22 +133,25 @@ class BinaryTree(object):
 
         return traversal
 
+    def height(self, node):
+        if node is None:
+            return -1  # will return 0 because 1 + -1 is 0
 
-#               1
-#           /       \
-#          2          3
-#         /  \      /   \
-#        4    5     6   7
+        left_height = self.height(node.left)
+        right_height = self.height(node.right)
+
+        return 1 + max(left_height, right_height)
 
 
+#     1
+#    / \
+#   2  3
+#  / \
+# 4  5
+#
 tree = BinaryTree(1)
 tree.root.left = Node(2)
 tree.root.right = Node(3)
 tree.root.left.left = Node(4)
 tree.root.left.right = Node(5)
-
-print(tree.print_tree("reverse_levelorder"))
-
-# print(tree.print_tree("preorder"))
-# print(tree.print_tree("inorder"))
-# print(tree.print_tree("postorder"))
+print(tree.height(tree.root))

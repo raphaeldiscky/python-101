@@ -1,4 +1,5 @@
 def permutations(str):
+    # Time complexity: O(n!)
     if str == "":  # base case
         return [""]
     permutes = []

@@ -5,6 +5,10 @@
         capacity =  7
     output:
         knapsack(weights, prices, capacity) = 11
+
+    TOP DOWN approach:
+        - subproblems are evaluated before the main problem
+        - call is made to the main problem before the subproblem
 '''
 
 

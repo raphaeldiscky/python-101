@@ -70,8 +70,8 @@ print(WS_topdown(schedule))
 
 
 def WS_bottomup(schedule):
-     '''
-        Solution 2: top-down approach
+    '''
+        Solution 3: bottom-up approach
             time complexity O(n^2)
             space complexity O(n)
     '''
